@@ -29,3 +29,9 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 ## Etapa 5 — Planilha do Google (conta pessoal)
 - Backend (Apps Script) com a aba MUSICAS; autorização feita pelo usuário; código `APP1:` em Ajustes.
 - ✅ Usável: as músicas aparecem em todos os aparelhos e ficam com cópia na planilha.
+
+## Ao final — Verificar os outros apps (pedido do Iristenio)
+- Conferir a **Agenda** e outros apps feitos a partir da base: se ainda usam o banco `'app'` e a chave de
+  tema `'tema'` (compartilhados entre todos os apps em iristenio.github.io).
+- Antes de trocar o nome do banco num app já publicado: garantir que está tudo sincronizado com a planilha
+  (ou migrar os dados), senão o aparelho "esquece" o que está guardado nele.
