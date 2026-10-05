@@ -17,6 +17,9 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
+        // Identidade fixa do app para o Chrome. "-2": a 1ª identidade ficou presa como "já instalada"
+        // nos celulares (sem estar) — trocar a identidade faz o Chrome tratar como app novo.
+        id: 'meu-repertorio-2',
         name: APP.nome,
         short_name: APP.nomeCurto,
         description: APP.descricao,
