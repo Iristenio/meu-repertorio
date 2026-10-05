@@ -186,3 +186,10 @@ export const IconeCapa = (p: Props) => (
     <path d="M4 17c3-2 5 1 8-0.5s5-1.5 8 0" />
   </Base>
 );
+
+export const IconeColar = (p: Props) => (
+  <Base {...p}>
+    <rect x="5" y="4" width="14" height="17" rx="2" />
+    <path d="M9 4V3h6v1M9 10h6M9 13.5h6M9 17h4" />
+  </Base>
+);

@@ -161,3 +161,18 @@
 @media (hover: hover) {
   html.com-pc .capa-cartao:hover { border-color: var(--primaria); }
 }
+
+/* ---- Colar letra inteira ---- */
+.botao-colar { align-self: flex-start; min-height: 42px; padding: 0 16px; font-size: 15px; }
+.botao-colar svg { width: 19px; height: 19px; color: var(--primaria); }
+.colar-caixa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--primaria);
+  background: var(--primaria-suave);
+}
+.colar-caixa .campo { background: var(--superficie); }
+.colar-caixa code { font-size: 13.5px; }

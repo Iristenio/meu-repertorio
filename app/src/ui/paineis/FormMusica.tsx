@@ -15,11 +15,12 @@ import {
   TIPOS_PARTE,
   validarMusica,
 } from '../../dominio/musicas';
+import { importarLetra } from '../../dominio/importar';
 import { buscar, lerConfig, novoId } from '../../dados/repositorio';
 import { useEntidade } from '../../dados/ganchos';
 import { excluirMusica, salvarMusica } from '../acoes/musicas';
 import { useEstado } from '../estado';
-import { IconeCopiar, IconeDescer, IconeFolha, IconeLixeira, IconeMais, IconePlay, IconeSubir } from '../icones';
+import { IconeColar, IconeCopiar, IconeDescer, IconeFolha, IconeLixeira, IconeMais, IconePlay, IconeSubir } from '../icones';
 import { VisualizarFolha } from '../folha/VisualizarFolha';
 
 const SITUACOES: { valor: Exclude<StatusMusica, 'excluida'>; rotulo: string }[] = [
@@ -34,6 +35,8 @@ export function FormMusica({ id }: { id?: string }) {
   const [erros, setErros] = useState<string[]>([]);
   const [focarParte, setFocarParte] = useState<string | null>(null);
   const [verFolha, setVerFolha] = useState(false);
+  const [colando, setColando] = useState(false);
+  const [textoColado, setTextoColado] = useState('');
   const titulo = useRef<HTMLInputElement>(null);
   /** Versão gravada (para saber se há alterações não salvas). */
   const base = useRef('');
@@ -153,6 +156,42 @@ export function FormMusica({ id }: { id?: string }) {
 
   const linkInvalido = musica.link.trim() !== '' && !linkYoutubeValido(musica.link);
 
+  /** "Colar letra inteira": divide o texto colado em partes (ver dominio/importar.ts). */
+  async function dividirLetraColada() {
+    const r = importarLetra(textoColado);
+    if (!r.partes.length) {
+      avisar({ texto: 'Não encontrei nenhuma linha de letra no texto colado.' });
+      return;
+    }
+    const m = atual.current!;
+    let modo: 'substituir' | 'adicionar' | null = 'substituir';
+    if (m.partes.some((p) => p.texto.trim()))
+      modo = await perguntar(
+        'Esta música já tem letra',
+        [
+          { valor: 'substituir', rotulo: 'Substituir a letra', estilo: 'perigo' },
+          { valor: 'adicionar', rotulo: 'Adicionar no fim', estilo: 'primario' },
+        ],
+        'O que fazer com as partes que já estão escritas?',
+      );
+    if (!modo) return;
+    const novas = r.partes.map((p) => novaParte(novoId(), p.tipo, p.texto, p.nome));
+    const anterior = { partes: m.partes, titulo: m.titulo, observacoes: m.observacoes };
+    // Observações das marcações (ex.: "mais forte") não saem na folha: ficam guardadas nas Observações
+    const notas = r.observacoes.length ? `Marcações originais: ${r.observacoes.join(' · ')}` : '';
+    mudar({
+      partes: modo === 'adicionar' ? [...m.partes, ...novas] : novas,
+      titulo: m.titulo.trim() ? m.titulo : r.titulo,
+      observacoes: notas ? [m.observacoes.trim(), notas].filter(Boolean).join('\n') : m.observacoes,
+    });
+    setColando(false);
+    setTextoColado('');
+    avisar({
+      texto: `Letra dividida em ${novas.length} partes. Confira os tipos antes de salvar.`,
+      desfazer: async () => mudar(anterior),
+    });
+  }
+
   function abrirFolha() {
     if (!podeGerarFolha(musica!)) {
       avisar({ texto: 'Para ver a folha, escreva o título e pelo menos uma parte da letra.' });
@@ -182,6 +221,35 @@ export function FormMusica({ id }: { id?: string }) {
 
       <fieldset>
         <legend>Letra</legend>
+        {colando ? (
+          <div class="colar-caixa">
+            <p class="dica">
+              Cole aqui a letra <strong>completa</strong>. Se ela tiver marcações como <code>[Verso 1]</code>,{' '}
+              <code>[Refrão]</code> ou <code>[Chorus]</code>, o app usa; senão, separa nas linhas em branco. Se a 1ª
+              linha for o título, ele também é aproveitado.
+            </p>
+            <textarea
+              class="campo"
+              rows={9}
+              placeholder="Cole a letra aqui…"
+              value={textoColado}
+              onInput={(e) => setTextoColado(e.currentTarget.value)}
+              autoFocus
+            />
+            <div class="linha">
+              <button type="button" class="botao primario" disabled={!textoColado.trim()} onClick={dividirLetraColada}>
+                Dividir em partes
+              </button>
+              <button type="button" class="botao" onClick={() => (setColando(false), setTextoColado(''))}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button type="button" class="botao botao-colar" onClick={() => setColando(true)}>
+            <IconeColar /> Colar letra inteira
+          </button>
+        )}
         {musica.partes.length === 0 && <p class="dica">Adicione as partes da letra com os botões abaixo.</p>}
         <ol class="partes">
           {musica.partes.map((p, i) => (
