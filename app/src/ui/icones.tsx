@@ -178,3 +178,11 @@ export const IconeFolha = (p: Props) => (
     <path d="M14.5 2.5V7H19M9 12h7M9 15.5h7M9 19h4" />
   </Base>
 );
+
+export const IconeCapa = (p: Props) => (
+  <Base {...p}>
+    <rect x="4" y="2.5" width="16" height="19" rx="2" />
+    <path d="M8 7.5h8M8 11h5" />
+    <path d="M4 17c3-2 5 1 8-0.5s5-1.5 8 0" />
+  </Base>
+);

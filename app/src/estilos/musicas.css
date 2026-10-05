@@ -102,3 +102,62 @@
   html.com-pc .parte-botoes .botao-icone:not(:disabled):hover { background: var(--superficie-2); }
 }
 .acoes-form .botao svg { width: 20px; height: 20px; flex: none; }
+
+/* ---- Tela Capas ---- */
+.capas-dica { margin-bottom: 16px; max-width: 860px; }
+.capas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  max-width: 980px;
+}
+.capa-cartao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 10px 12px;
+  border-radius: var(--raio);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  text-align: left;
+}
+.capa-cartao small { color: var(--texto-2); font-size: 14px; }
+/* Miniatura: creme do template com o estilo em letra cursiva e as ondas embaixo */
+.capa-miniatura {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  margin-bottom: 8px;
+  padding: 0 12%;
+  overflow: hidden;
+  border-radius: 6px;
+  container-type: inline-size;
+  background: #efede1 linear-gradient(to top, #101e29 0 14%, transparent 14%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+.capa-miniatura span {
+  font-family: 'Kaushan Script', cursive;
+  line-height: 1.1;
+  color: #101e29;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+.capa-miniatura::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 30%;
+  top: 62%;
+  height: 1px;
+  background: #a8782a;
+}
+@media (hover: hover) {
+  html.com-pc .capa-cartao:hover { border-color: var(--primaria); }
+}

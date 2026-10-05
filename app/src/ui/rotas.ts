@@ -3,14 +3,15 @@
 // ► Nova tela: acrescente em TELAS e em MENU (e o componente em App.tsx).
 import type { ComponentType, JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { IconeConfig, IconeMusica } from './icones';
+import { IconeCapa, IconeConfig, IconeMusica } from './icones';
 
-export const TELAS = ['musicas', 'config'] as const;
+export const TELAS = ['musicas', 'capas', 'config'] as const;
 export type Tela = (typeof TELAS)[number];
 
 /** Itens do menu (lateral em telas largas, rodapé no celular). "config" fica sempre por último. */
 export const MENU: { tela: Tela; rotulo: string; Icone: ComponentType<JSX.SVGAttributes<SVGSVGElement>> }[] = [
   { tela: 'musicas', rotulo: 'Músicas', Icone: IconeMusica },
+  { tela: 'capas', rotulo: 'Capas', Icone: IconeCapa },
   { tela: 'config', rotulo: 'Ajustes', Icone: IconeConfig },
 ];
 

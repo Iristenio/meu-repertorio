@@ -19,7 +19,7 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 - Botão **Gerar PDF / Imprimir** (abre a impressão → "Salvar como PDF"; nome do arquivo = título).
 - ✅ Usável: gerar e imprimir a folha de cada música.
 
-## Etapa 3 — Capas por estilo
+## Etapa 3 — Capas por estilo ✔ (concluída em 05/10/2026)
 - Menu **Capas**: lista dos estilos usados; capa A4 com estilo + compositor; gerar PDF.
 - ✅ Usável: capas para separar a pasta impressa por estilo.
 

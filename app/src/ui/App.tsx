@@ -8,6 +8,7 @@ import { AvisoDesfazer } from './componentes/AvisoDesfazer';
 import { Dialogo } from './componentes/Dialogo';
 import { ProvedorEstado, useEstado, type Painel } from './estado';
 import { TelaMusicas } from './telas/TelaMusicas';
+import { TelaCapas } from './telas/TelaCapas';
 import { TelaAjustes } from './telas/TelaAjustes';
 import { FormMusica } from './paineis/FormMusica';
 import { IconeMusica } from './icones';
@@ -15,6 +16,7 @@ import { IconeMusica } from './icones';
 /** ► Nova tela: acrescente aqui (e em TELAS/MENU, em rotas.ts). */
 const TELA: Record<Tela, () => JSX.Element> = {
   musicas: TelaMusicas,
+  capas: TelaCapas,
   config: TelaAjustes,
 };
 
@@ -47,7 +49,7 @@ function Estrutura() {
       <MenuLateral atual={tela} />
       <main class="principal">
         <Conteudo />
-        {tela !== 'config' && <BotaoNovo opcoes={opcoesNovo} />}
+        {tela === 'musicas' && <BotaoNovo opcoes={opcoesNovo} />}
       </main>
       {painel && (
         <PainelLateral titulo={tituloPainel(painel)} aoFechar={fecharPainel}>
