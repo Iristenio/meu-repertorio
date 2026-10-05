@@ -110,3 +110,7 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 | Pasta completa | Não — um PDF por música; **capas por estilo** num menu próprio |
 | Capa | Só o estilo e o compositor |
 | Compositor | "Paulo Gonçalves" (muda em Ajustes) |
+| Fontes da folha | Título: **Kaushan Script**; rótulos: **Montserrat**; letra: **Lato** (guardadas no app, offline) |
+| Tamanho da letra | Normal 11,5 pt; comprimida 10,5 pt (a letra completa do template cabe em 1 folha comprimida) |
+| PDF | Pela janela de impressão do navegador ("Salvar como PDF"); nome do arquivo = título da música |
+| Folhas de continuação | Título menor com "(continuação)", sem o QR; número da folha ("2 / 3") no rodapé |

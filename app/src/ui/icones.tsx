@@ -171,3 +171,10 @@ export const IconePlay = (p: Props) => (
     <path d="M10 9.5v5l4.5-2.5z" fill="currentColor" />
   </Base>
 );
+
+export const IconeFolha = (p: Props) => (
+  <Base {...p}>
+    <path d="M6 2.5h8.5L19 7v14.5H6z" />
+    <path d="M14.5 2.5V7H19M9 12h7M9 15.5h7M9 19h4" />
+  </Base>
+);

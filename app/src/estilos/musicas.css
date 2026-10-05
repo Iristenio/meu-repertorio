@@ -101,3 +101,4 @@
   html.com-pc .chip:hover { border-color: var(--primaria); }
   html.com-pc .parte-botoes .botao-icone:not(:disabled):hover { background: var(--superficie-2); }
 }
+.acoes-form .botao svg { width: 20px; height: 20px; flex: none; }

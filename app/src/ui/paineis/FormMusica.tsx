@@ -9,6 +9,7 @@ import {
   normalizarLink,
   novaMusica,
   novaParte,
+  podeGerarFolha,
   removerParte,
   rotulosDasPartes,
   TIPOS_PARTE,
@@ -18,7 +19,8 @@ import { buscar, lerConfig, novoId } from '../../dados/repositorio';
 import { useEntidade } from '../../dados/ganchos';
 import { excluirMusica, salvarMusica } from '../acoes/musicas';
 import { useEstado } from '../estado';
-import { IconeCopiar, IconeDescer, IconeLixeira, IconeMais, IconePlay, IconeSubir } from '../icones';
+import { IconeCopiar, IconeDescer, IconeFolha, IconeLixeira, IconeMais, IconePlay, IconeSubir } from '../icones';
+import { VisualizarFolha } from '../folha/VisualizarFolha';
 
 const SITUACOES: { valor: Exclude<StatusMusica, 'excluida'>; rotulo: string }[] = [
   { valor: 'rascunho', rotulo: 'Rascunho' },
@@ -31,6 +33,7 @@ export function FormMusica({ id }: { id?: string }) {
   const [musica, setMusica] = useState<Musica | null>(null);
   const [erros, setErros] = useState<string[]>([]);
   const [focarParte, setFocarParte] = useState<string | null>(null);
+  const [verFolha, setVerFolha] = useState(false);
   const titulo = useRef<HTMLInputElement>(null);
   /** Versão gravada (para saber se há alterações não salvas). */
   const base = useRef('');
@@ -149,6 +152,14 @@ export function FormMusica({ id }: { id?: string }) {
   }
 
   const linkInvalido = musica.link.trim() !== '' && !linkYoutubeValido(musica.link);
+
+  function abrirFolha() {
+    if (!podeGerarFolha(musica!)) {
+      avisar({ texto: 'Para ver a folha, escreva o título e pelo menos uma parte da letra.' });
+      return;
+    }
+    setVerFolha(true);
+  }
 
   return (
     <form class="formulario form-musica" onSubmit={aoSalvar} noValidate>
@@ -319,10 +330,17 @@ export function FormMusica({ id }: { id?: string }) {
 
       <div class="acoes-form">
         <button type="submit" class="botao primario">{novo ? 'Criar' : 'Salvar'}</button>
+        <button type="button" class="botao" onClick={abrirFolha} title="Ver a folha A4 e gerar o PDF">
+          <IconeFolha /> Folha A4
+        </button>
         {!novo && (
           <button type="button" class="botao perigo" onClick={excluir}>Excluir</button>
         )}
       </div>
+
+      {verFolha && (
+        <VisualizarFolha musica={musica} aoFechar={() => setVerFolha(false)} aoComprimir={(compacta) => mudar({ compacta })} />
+      )}
     </form>
   );
 }

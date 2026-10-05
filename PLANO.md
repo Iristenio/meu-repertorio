@@ -11,7 +11,7 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 - Visual do app com as cores do template (dourado, azul-marinho, creme) e ícone novo.
 - ✅ Usável: o Paulo já cadastra e organiza as letras no celular e no PC.
 
-## Etapa 2 — A folha A4 em PDF
+## Etapa 2 — A folha A4 em PDF ✔ (concluída em 05/10/2026)
 - Tela **Folha**: pré-visualização no visual do template (título cursivo, faixas das partes, caixa
   "Ouça a música" com QR Code, violão e ondas redesenhados).
 - QR Code gerado no aparelho; fontes guardadas no app (offline).
