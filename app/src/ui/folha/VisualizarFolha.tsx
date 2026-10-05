@@ -11,15 +11,15 @@ interface Props {
 
 export function VisualizarFolha({ musica, aoFechar, aoComprimir }: Props) {
   const conteudo = prepararFolha(musica);
-  const { medidor, paginas } = usePaginas(conteudo);
-  const total = paginas?.length ?? 0;
+  const { medidor, folhas } = usePaginas(conteudo);
+  const total = folhas?.length ?? 0;
 
   return (
     <TelaImpressao
       titulo="Folha da música"
       arquivo={musica.titulo}
       aoFechar={aoFechar}
-      folhas={paginas?.map((trechos, i) => <PaginaFolha key={i} conteudo={conteudo} trechos={trechos} numero={i + 1} total={total} />) ?? null}
+      folhas={folhas?.map((colunas, i) => <PaginaFolha key={i} conteudo={conteudo} colunas={colunas} numero={i + 1} total={total} />) ?? null}
       escondido={medidor}
       extras={
         <label class="interruptor folha-comprimir" title="Letra e espaços menores, para caber em menos folhas">

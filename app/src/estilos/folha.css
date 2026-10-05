@@ -236,3 +236,6 @@
 }
 .fl-capa-compositor { margin: 2.5mm 0 0; font: 500 20pt 'Montserrat', sans-serif; color: var(--fl-marinho); }
 .fl-violao-capa { right: 4mm; bottom: -62mm; width: 112mm; height: 312mm; }
+
+/* ============ Duas colunas de letra (folhas sem o QR) ============ */
+.fl-duas-colunas .fl-corpo { grid-template-columns: minmax(0, 1fr) 0.3mm minmax(0, 1fr); }
