@@ -7,3 +7,6 @@ dev-dist/
 .clasprc.json
 .DS_Store
 Thumbs.db
+
+# Funções de uso único no Apps Script (podem conter letras não publicadas)
+backend/temporario.js
