@@ -30,7 +30,7 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 - **Colar letra inteira**: divide a letra colada em partes pelas marcações ([Verso 1], [Chorus]…) ou linhas em branco.
 - **Duas colunas** de letra nas folhas sem QR Code (folhas de continuação e músicas sem link).
 
-## Etapa 5 — Planilha do Google (conta pessoal)
+## Etapa 5 — Planilha do Google (conta pessoal) ✔ (sincronizando em 05/10/2026)
 - Backend (Apps Script) com a aba MUSICAS; autorização feita pelo usuário; código `APP1:` em Ajustes.
 - ✅ Usável: as músicas aparecem em todos os aparelhos e ficam com cópia na planilha.
 
