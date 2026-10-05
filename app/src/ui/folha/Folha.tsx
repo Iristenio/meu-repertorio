@@ -5,7 +5,7 @@ import type { Musica, Parte } from '../../dominio/tipos';
 import { limparMusica, rotulosDasPartes } from '../../dominio/musicas';
 import { agruparEmFolhas, paginar, type BlocoMedido, type Coluna, type Trecho } from '../../dominio/paginacao';
 import { caminhoQr } from './qr';
-import { Celular, Nota, NotaDupla, Ondas, Violao } from './Desenhos';
+import { Celular, Nota, NotaDupla, Ondas } from './Desenhos';
 
 /** Música pronta para a folha: sem espaços sobrando e sem partes vazias (com os rótulos já numerados). */
 export interface ConteudoFolha {
@@ -31,9 +31,6 @@ export function tamanhoTitulo(titulo: string, continuacao: boolean): number {
 /** A 1ª folha tem o QR ao lado da letra (1 coluna); as outras, e as de músicas sem link, têm 2 colunas. */
 export const temDuasColunas = (musica: Musica, numero: number) => numero > 1 || !musica.link;
 
-/** Até onde (mm a partir do topo da folha) a coluna da direita pode ir sem encostar no violão. */
-const LIMITE_COLUNA_DIREITA_MM = 205;
-
 interface PropsPagina {
   conteudo: ConteudoFolha;
   /** Trechos da letra de cada coluna (1 ou 2 colunas). */
@@ -50,7 +47,6 @@ export function PaginaFolha({ conteudo, colunas, numero, total }: PropsPagina) {
   return (
     <article class={classes.filter(Boolean).join(' ')}>
       <Ondas class="fl-ondas" />
-      <Violao class="fl-violao" />
       <Nota class="fl-nota" />
 
       <header class="fl-cabecalho">
@@ -155,8 +151,6 @@ async function carregarFontes() {
 const altura = (el: Element) => el.getBoundingClientRect().height;
 const margem = (el: Element, lado: 'top' | 'bottom') => parseFloat(getComputedStyle(el)[lado === 'top' ? 'marginTop' : 'marginBottom']) || 0;
 
-const MM = 96 / 25.4;
-
 /** Medidas das partes dentro da 1ª coluna de uma folha de rascunho. */
 function medirFolha(pagina: Element) {
   const letra = pagina.querySelector('.fl-letra') as HTMLElement;
@@ -168,12 +162,9 @@ function medirFolha(pagina: Element) {
       linhas: [...s.querySelectorAll('.fl-linha')].map(altura),
     };
   });
-  const topoLetra = letra.getBoundingClientRect().top - pagina.getBoundingClientRect().top;
   return {
     blocos,
     capacidade: letra.clientHeight,
-    /** Coluna da direita: do topo da letra até antes do violão (no máximo a altura da coluna). */
-    capacidadeDireita: Math.min(letra.clientHeight, LIMITE_COLUNA_DIREITA_MM * MM - topoLetra),
     espacoEntre: secoes[1] ? margem(secoes[1], 'top') : 0,
   };
 }
@@ -199,12 +190,10 @@ export function usePaginas(conteudo: ConteudoFolha) {
       const [primeira, outras] = [...raiz.querySelectorAll('.fl-pagina')].map(medirFolha);
       const duasNaPrimeira = temDuasColunas(musica, 1);
       const colunasNaFolha = (f: number) => (temDuasColunas(musica, f + 1) ? 2 : 1);
-      // Coluna nº i → (folha, posição) → capacidade e medidas na largura dela
+      // Coluna nº i → está na 1ª folha ou nas outras → capacidade e medidas na largura dela
       const coluna = (i: number): Coluna => {
-        const naPrimeira = duasNaPrimeira ? i < 2 : i < 1;
-        const m = naPrimeira ? primeira : outras;
-        const posicao = duasNaPrimeira ? i % 2 : naPrimeira ? 0 : (i - 1) % 2;
-        return { capacidade: posicao === 0 ? m.capacidade : m.capacidadeDireita, blocos: m.blocos };
+        const m = (duasNaPrimeira ? i < 2 : i < 1) ? primeira : outras;
+        return { capacidade: m.capacidade, blocos: m.blocos };
       };
       const colunas = paginar(conteudo.partes.length, coluna, primeira.espacoEntre || outras.espacoEntre);
       setFolhas(agruparEmFolhas(colunas, colunasNaFolha));

@@ -1,4 +1,4 @@
-// Configuração inicial — execute a função configurar() no editor do Apps Script
+// Configuração inicial — execute a função configurar() no editor do Apps Script.
 // (na primeira vez e sempre que acrescentar uma entidade nova no ESQUEMA).
 // Cria (ou reaproveita) a planilha, prepara as abas e mostra o código de conexão do app.
 
