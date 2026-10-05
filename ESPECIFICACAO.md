@@ -25,6 +25,9 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 | Título | sim | Aparece grande, em letra cursiva |
 | Partes da letra | sim (pelo menos 1) | Lista ordenada — ver abaixo |
 | Link do YouTube | não | Vira o QR Code. Sem link → folha sem o quadro do QR |
+| Estilo | não | Ex.: Sertanejo, Gospel, MPB — escolhe de uma lista dos já usados ou digita um novo |
+| Compositor | sim | Já vem preenchido com o nome padrão de Ajustes ("Paulo Gonçalves"); pode mudar numa música |
+| Letra compacta | não | Botão "Comprimir": diminui a letra e os espaços para caber em menos folhas |
 | Situação | sim | **Rascunho** ou **Concluída** |
 | Data de composição | não | Só para organizar a lista (não sai na folha) |
 | Observações | não | Anotações do Paulo (não saem na folha) |
@@ -32,11 +35,12 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 ### Parte da letra
 | Campo | Observação |
 |---|---|
-| Tipo | Verso · Pré-refrão · Refrão · Ponte · Refrão final (e outros — ver pergunta 3) |
+| Tipo | Introdução · Verso · Pré-refrão · Refrão · Ponte · Refrão final · Final · **Outro (nome livre)** |
+| Nome | Só para o tipo "Outro": o nome que o Paulo digitar (ex.: "Falado") |
 | Texto | As linhas da letra, uma por linha |
 
 ### Ajustes (valem para todas as músicas)
-- **Nome do compositor** que sai na folha (ex.: "Paulo Ricardo Pereira Gonçalves" ou "Paulo Gonçalves").
+- **Compositor padrão**: "Paulo Gonçalves" (usado em músicas novas e nas capas).
 
 ## 3. Regras
 
@@ -49,6 +53,12 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 6. O **QR Code é gerado no próprio aparelho** (funciona sem internet).
 7. Nada é apagado de verdade: excluir manda para "excluídas" e dá para desfazer.
 8. O texto "Escaneie o QR Code para ouvir a música." é fixo.
+9. **Letra longa**: o tamanho da letra é sempre o mesmo; o que não couber continua numa **2ª folha**
+   (com o título repetido em tamanho menor). O botão **Comprimir** reduz letra e espaçamentos para tentar
+   caber em uma folha só.
+10. **Cada música gera seu próprio PDF** (nome do arquivo = título da música).
+11. **Capas por estilo**: para cada estilo usado, o app gera uma capa A4 com o nome do estilo e o
+    compositor (sem lista de músicas). Cada capa também é um PDF separado.
 
 ## 4. Telas
 
@@ -60,14 +70,16 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 3. **Folha (pré-visualização)** — mostra a folha A4 exatamente como vai sair, com o botão
    **Gerar PDF / Imprimir**. No PC e no Android abre a janela de impressão, onde se escolhe
    "Salvar como PDF".
-4. **Ajustes** — nome do compositor, sincronização com a planilha, tema.
+4. **Capas** (menu próprio) — lista os estilos usados (com quantas músicas cada um tem); tocar num estilo
+   mostra a capa e o botão **Gerar PDF / Imprimir**.
+5. **Ajustes** — compositor padrão, sincronização com a planilha, tema.
 
 ## 5. A folha A4 (retrato)
 
 ```
 ┌─────────────────────────────────────────────┐
-│ LETRA DE MÚSICA ────────────    frase       │
-│ Título em letra cursiva          cursiva    │
+│ LETRA DE MÚSICA ────────────                │
+│ Título em letra cursiva                     │
 │ Compositor: Paulo Gonçalves                 │
 │ ─────────────────────────────               │
 │ ▌VERSO 1            │  ┌ OUÇA A MÚSICA ┐    │
@@ -82,19 +94,19 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 
 - **Mantém**: rótulo "LETRA DE MÚSICA", título cursivo, compositor, faixas azul-marinho das partes com
   barrinha dourada, caixa "Ouça a música" com QR, ondas e violão desenhados no rodapé/canto.
-- **Remove**: quadro "Informações" (tom, BPM, data, direitos autorais) e a linha "Intérprete".
+- **Remove**: quadro "Informações" (tom, BPM, data, direitos autorais), a linha "Intérprete" e as
+  frases em letra cursiva.
 - Os desenhos (violão, ondas, notas) serão **redesenhados** por mim no mesmo estilo — não ficarão
   idênticos ao template, mas com a mesma cara.
 - As letras e fontes ficam **guardadas dentro do app** (funcionam sem internet).
 
-## 6. Perguntas em aberto
+## 6. Decisões tomadas
 
-1. **Letra comprida** que não cabe numa página: diminuir a letra automaticamente para caber em 1 página,
-   ou continuar numa 2ª página?
-2. **Frases cursivas** ("Música é sentimento em forma de som" / "A música transforma o que sentimos em
-   palavras"): manter fixas, permitir escrever uma frase por música, ou tirar?
-3. **Outros tipos de parte** além dos cinco: Introdução, Final/Outro, Solo, ou um tipo com nome livre?
-4. **"Pasta" completa**: além da folha de cada música, gerar **um PDF único com todas as concluídas**
-   (com capa e índice)? Ou basta uma folha por música?
-5. **Nome do compositor**: "Paulo Ricardo Pereira Gonçalves" ou "Paulo Gonçalves" (pode mudar depois
-   em Ajustes)?
+| Pergunta | Decisão |
+|---|---|
+| Letra comprida | Mesmo tamanho; continua na 2ª folha; botão "Comprimir" opcional |
+| Frases cursivas | Retiradas |
+| Tipos de parte | Os cinco + Introdução, Final e Outro (nome livre) |
+| Pasta completa | Não — um PDF por música; **capas por estilo** num menu próprio |
+| Capa | Só o estilo e o compositor |
+| Compositor | "Paulo Gonçalves" (muda em Ajustes) |
