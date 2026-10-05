@@ -10,9 +10,9 @@ export const APP = {
   nome: 'Meu Repertório',
   /** Nome curto (aparece embaixo do ícone na tela inicial). */
   nomeCurto: 'Repertório',
-  descricao: 'Aplicativo pessoal que funciona offline',
+  descricao: 'Composições de Paulo Gonçalves: letras e folhas para impressão',
   /** Cor principal (botões, destaques, barra do sistema). */
-  corPrimaria: '#2f6fed',
+  corPrimaria: '#9c6b1c',
   /**
    * Em quais aparelhos o app será usado. Muda o layout:
    *  • só 'celular'           → layout de celular em qualquer tela, orientação retrato
