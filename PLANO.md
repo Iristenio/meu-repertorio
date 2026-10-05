@@ -23,8 +23,12 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 - Menu **Capas**: lista dos estilos usados; capa A4 com estilo + compositor; gerar PDF.
 - ✅ Usável: capas para separar a pasta impressa por estilo.
 
-## Etapa 4 — Publicar e instalar
+## Etapa 4 — Publicar e instalar ✔ (publicado em 05/10/2026: https://iristenio.github.io/meu-repertorio/)
 - Repositório no GitHub + GitHub Pages; instalar no celular e no PC.
+
+## Extras feitos no caminho
+- **Colar letra inteira**: divide a letra colada em partes pelas marcações ([Verso 1], [Chorus]…) ou linhas em branco.
+- **Duas colunas** de letra nas folhas sem QR Code (folhas de continuação e músicas sem link).
 
 ## Etapa 5 — Planilha do Google (conta pessoal)
 - Backend (Apps Script) com a aba MUSICAS; autorização feita pelo usuário; código `APP1:` em Ajustes.
