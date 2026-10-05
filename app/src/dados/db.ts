@@ -3,15 +3,16 @@
 // ► Nova entidade? Acrescente a loja em AppDB e crie-a num bloco `if (versaoAntiga < N)`,
 //   aumentando VERSAO. Nunca altere blocos antigos (os aparelhos já instalados dependem deles).
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import type { Item, ItemFila } from '../dominio/tipos';
+import type { ItemFila, Musica } from '../dominio/tipos';
 
 export interface AppDB extends DBSchema {
-  itens: { key: string; value: Item };
+  musicas: { key: string; value: Musica };
   fila_sync: { key: string; value: ItemFila; indexes: { registro_id: string } };
   config: { key: string; value: { chave: string; valor: unknown } };
 }
 
-export const NOME_BANCO = 'app';
+// Nome próprio: todos os apps em iristenio.github.io dividem o mesmo "endereço" (e o mesmo IndexedDB)
+export const NOME_BANCO = 'meu-repertorio';
 const VERSAO = 1;
 
 let conexao: Promise<IDBPDatabase<AppDB>> | null = null;
@@ -20,7 +21,7 @@ export function abrirBanco(): Promise<IDBPDatabase<AppDB>> {
   conexao ??= openDB<AppDB>(NOME_BANCO, VERSAO, {
     upgrade(db, versaoAntiga) {
       if (versaoAntiga < 1) {
-        db.createObjectStore('itens', { keyPath: 'id' });
+        db.createObjectStore('musicas', { keyPath: 'id' });
         db.createObjectStore('fila_sync', { keyPath: 'id' }).createIndex('registro_id', 'registro_id');
         db.createObjectStore('config', { keyPath: 'chave' });
       }

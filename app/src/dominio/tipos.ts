@@ -12,21 +12,38 @@ export interface Registro {
   atualizado_em: string;
 }
 
-/* ---------------- Entidade de exemplo: Item ----------------
-   Serve de modelo. Renomeie/adapte ou apague quando criar as entidades do seu projeto. */
+/* ---------------- Música ---------------- */
 
-export type StatusItem = 'ativo' | 'concluido' | 'excluido';
+/** Tipos de parte da letra. "outro" = nome livre (campo `nome`). */
+export type TipoParte = 'introducao' | 'verso' | 'pre_refrao' | 'refrao' | 'ponte' | 'refrao_final' | 'final' | 'outro';
 
-export interface Item extends Registro {
+export interface Parte {
+  id: Id;
+  tipo: TipoParte;
+  /** Só para o tipo "outro". */
+  nome: string;
+  /** Linhas da letra, separadas por quebra de linha. */
+  texto: string;
+}
+
+export type StatusMusica = 'rascunho' | 'concluida' | 'excluida';
+
+export interface Musica extends Registro {
   titulo: string;
-  descricao: string;
-  data: string | null; // AAAA-MM-DD
-  hora: string | null; // HH:mm
-  status: StatusItem;
+  compositor: string;
+  estilo: string;
+  /** Link do YouTube (vira o QR Code da folha); vazio = sem QR. */
+  link: string;
+  partes: Parte[];
+  /** "Comprimir": letra e espaços menores na folha impressa. */
+  compacta: boolean;
+  data: string | null; // AAAA-MM-DD — data de composição
+  observacoes: string;
+  status: StatusMusica;
 }
 
 /** Nomes das entidades sincronizadas (cada uma vira uma loja local e uma aba na planilha). */
-export const ENTIDADES = ['itens'] as const;
+export const ENTIDADES = ['musicas'] as const;
 export type Entidade = (typeof ENTIDADES)[number];
 
 /* ---------------- Infraestrutura ---------------- */
@@ -48,10 +65,11 @@ export type Tema = 'sistema' | 'claro' | 'escuro';
 /** Preferências do usuário (valem por aparelho). */
 export interface Config {
   tema: Tema;
-  primeiro_dia_semana: 0 | 1; // 0 = domingo, 1 = segunda
+  /** Nome que vem preenchido em músicas novas e sai nas capas. */
+  compositor_padrao: string;
 }
 
 export const CONFIG_PADRAO: Config = {
   tema: 'sistema',
-  primeiro_dia_semana: 0,
+  compositor_padrao: 'Paulo Gonçalves',
 };

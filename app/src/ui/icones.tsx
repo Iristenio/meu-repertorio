@@ -124,3 +124,50 @@ export const IconeAlerta = (p: Props) => (
     <path d="M12 9v4M12 17h.01" />
   </Base>
 );
+
+export const IconeMusica = (p: Props) => (
+  <Base {...p}>
+    <path d="M9 18V5l11-2v13" />
+    <circle cx="6" cy="18" r="3" />
+    <circle cx="17" cy="16" r="3" />
+  </Base>
+);
+
+export const IconeBusca = (p: Props) => (
+  <Base {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-3.5-3.5" />
+  </Base>
+);
+
+export const IconeSubir = (p: Props) => (
+  <Base {...p}>
+    <path d="M6 15l6-6 6 6" />
+  </Base>
+);
+
+export const IconeDescer = (p: Props) => (
+  <Base {...p}>
+    <path d="M6 9l6 6 6-6" />
+  </Base>
+);
+
+export const IconeCopiar = (p: Props) => (
+  <Base {...p}>
+    <rect x="9" y="9" width="12" height="12" rx="2.5" />
+    <path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5" />
+  </Base>
+);
+
+export const IconeLixeira = (p: Props) => (
+  <Base {...p}>
+    <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />
+  </Base>
+);
+
+export const IconePlay = (p: Props) => (
+  <Base {...p}>
+    <rect x="2.5" y="5" width="19" height="14" rx="4" />
+    <path d="M10 9.5v5l4.5-2.5z" fill="currentColor" />
+  </Base>
+);

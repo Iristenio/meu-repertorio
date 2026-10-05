@@ -25,7 +25,7 @@ export default defineConfig({
         scope: BASE,
         display: 'standalone',
         orientation: somenteCelular ? 'portrait' : 'any',
-        background_color: '#f6f7f9',
+        background_color: '#efede1',
         theme_color: APP.corPrimaria,
         icons: [
           { src: 'icone-192.png', sizes: '192x192', type: 'image/png' },

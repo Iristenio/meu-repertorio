@@ -2,12 +2,12 @@
 // Regras: nada é apagado de verdade (exclusão lógica via status); toda gravação carimba
 // atualizado_em e entra na fila, que o motor de sincronização envia quando houver internet.
 import { abrirBanco } from './db';
-import type { Config, Entidade, Item, ItemFila, Registro } from '../dominio/tipos';
+import type { Config, Entidade, ItemFila, Musica, Registro } from '../dominio/tipos';
 import { CONFIG_PADRAO, ENTIDADES } from '../dominio/tipos';
 
 /** ► Nova entidade: acrescente aqui o tipo correspondente. */
 export type MapaEntidades = {
-  itens: Item;
+  musicas: Musica;
 };
 
 export const novoId = (): string => crypto.randomUUID();
@@ -212,7 +212,7 @@ export async function salvarConfig(parcial: Partial<Config>) {
  */
 export async function garantirDadosIniciais(_agora = new Date()) {
   // Exemplo:
-  // if (!(await buscar('itens', 'boas-vindas'))) await salvar('itens', { id: 'boas-vindas', ... });
+  // if (!(await buscar('musicas', 'exemplo'))) await salvar('musicas', { id: 'exemplo', ... });
 }
 
 /** RS09 — pede ao navegador para não apagar os dados locais. */

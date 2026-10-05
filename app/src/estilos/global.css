@@ -1,12 +1,15 @@
 /* ============ Tokens de design ============ */
 :root {
   color-scheme: light;
-  --fundo: #f4f5f8;
-  --superficie: #ffffff;
-  --superficie-2: #eef0f4;
-  --borda: #dde1e8;
-  --texto: #1b1f27;
-  --texto-2: #5b6474;
+  /* Cores do template: creme, azul-marinho e dourado */
+  --fundo: #efede1;
+  --superficie: #fbfaf4;
+  --superficie-2: #f0ebdd;
+  --borda: #ddd5c3;
+  --texto: #101e29;
+  --texto-2: #5d6268;
+  --marinho: #101e29;
+  --marinho-texto: #f6f1e4;
   --primaria: var(--primaria-app, #2f6fed);
   --primaria-texto: #ffffff;
   --primaria-suave: color-mix(in srgb, var(--primaria) 14%, white);
@@ -19,7 +22,7 @@
   --raio: 14px;
   --toque: 48px;           /* alvo mínimo de toque */
   --menu-largura: 92px;
-  --painel-largura: 420px;
+  --painel-largura: 480px;
   --fonte: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -34,6 +37,8 @@
     --borda: #2e3440;
     --texto: #e8ebf0;
     --texto-2: #9aa3b2;
+    --marinho: #2b3d55;
+    --marinho-texto: #f6f1e4;
     --primaria: color-mix(in srgb, var(--primaria-app, #2f6fed) 65%, white);
     --primaria-texto: #0b1220;
     --primaria-suave: color-mix(in srgb, var(--primaria-app, #2f6fed) 25%, #111418);
@@ -53,6 +58,8 @@
   --borda: #2e3440;
   --texto: #e8ebf0;
   --texto-2: #9aa3b2;
+  --marinho: #2b3d55;
+  --marinho-texto: #f6f1e4;
   --primaria: color-mix(in srgb, var(--primaria-app, #2f6fed) 65%, white);
   --primaria-texto: #0b1220;
   --primaria-suave: color-mix(in srgb, var(--primaria-app, #2f6fed) 25%, #111418);

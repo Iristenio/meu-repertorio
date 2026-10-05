@@ -1,0 +1,103 @@
+/* ============ Músicas: lista e formulário com as partes da letra ============ */
+
+/* ---- Filtros da lista ---- */
+.filtros { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; max-width: 860px; }
+.busca {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 14px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+}
+.busca > svg { width: 22px; height: 22px; color: var(--texto-2); flex: none; }
+.busca .campo { background: transparent; border: none; min-height: 52px; }
+.busca .campo::-webkit-search-cancel-button { display: none; }
+.filtros .segmentado { max-width: 420px; }
+.chips-rolagem { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.chips-rolagem .chip { flex: none; }
+.chip small { color: var(--texto-2); font-weight: 600; }
+
+/* ---- Lista ---- */
+.lista-musicas { max-width: 860px; }
+.lista-musicas .linha-item { min-height: 68px; }
+.lista-musicas .linha-item[aria-current='true'] { border-color: var(--primaria); background: var(--primaria-suave); }
+.musica-icone {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--marinho);
+  color: var(--primaria-app, var(--primaria));
+}
+.musica-icone svg { width: 22px; height: 22px; }
+.musica-marcas { display: flex; align-items: center; gap: 8px; flex: none; }
+.marca-link svg { width: 24px; height: 24px; color: var(--texto-2); display: block; }
+.etiqueta {
+  font-size: 12.5px;
+  font-weight: 650;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--superficie-2);
+  color: var(--texto-2);
+}
+
+/* ---- Formulário: partes da letra (faixa azul-marinho com barrinha dourada, como no template) ---- */
+.partes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.parte { display: flex; flex-direction: column; gap: 6px; }
+.parte-topo { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.parte-topo { flex-wrap: nowrap; }
+.parte-rotulo {
+  appearance: none;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-height: 34px;
+  max-width: 60%;
+  padding: 4px 30px 4px 12px;
+  background: var(--marinho)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f6f1e4' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E")
+    no-repeat right 8px center / 16px;
+  color: var(--marinho-texto);
+  border: none;
+  border-left: 5px solid var(--primaria-app, var(--primaria));
+  border-radius: 2px;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+.parte-rotulo option { background: var(--superficie); color: var(--texto); text-transform: none; letter-spacing: 0; font-weight: 500; }
+.parte-botoes { display: flex; margin-left: auto; }
+.parte-botoes .botao-icone { width: 40px; height: 40px; }
+@media (max-width: 420px) { .parte-botoes .botao-icone { width: 36px; } }
+.parte-botoes .botao-icone svg { width: 21px; height: 21px; }
+.parte-botoes .botao-icone:disabled { opacity: 0.3; cursor: default; }
+.botao-icone.perigo { color: var(--perigo); }
+/* Cresce junto com o texto (sem rolagem dentro da caixa) */
+.parte-texto { min-height: 5.2em; line-height: 1.5; user-select: text; field-sizing: content; resize: none; }
+
+.adicionar-partes .chip { min-height: 40px; padding: 0 14px 0 10px; gap: 4px; font-size: 14.5px; }
+.adicionar-partes .chip svg { width: 18px; height: 18px; color: var(--primaria); }
+
+.linha-link { flex-wrap: nowrap; }
+.linha-link .campo { flex: 1; min-width: 0; }
+.linha-link .botao { flex: none; padding: 0 14px; text-decoration: none; color: inherit; }
+.linha-link .botao svg { width: 20px; height: 20px; }
+.aviso-campo { color: var(--aviso); font-weight: 550; }
+
+.rotulo-campo { display: flex; flex-direction: column; gap: 6px; }
+.rotulo-campo > span { font-size: 14px; font-weight: 600; color: var(--texto-2); }
+.rotulo-campo input[type='date'].campo { width: auto; align-self: flex-start; }
+
+/* Ajustes: campo de texto nas preferências */
+.preferencias > label > .campo { max-width: 360px; }
+
+@media (hover: hover) {
+  html.com-pc .chip:hover { border-color: var(--primaria); }
+  html.com-pc .parte-botoes .botao-icone:not(:disabled):hover { background: var(--superficie-2); }
+}

@@ -3,7 +3,10 @@ import { createContext, type ComponentChildren } from 'preact';
 import { useCallback, useContext, useMemo, useRef, useState } from 'preact/hooks';
 
 /** ► Novo formulário/painel: acrescente um tipo aqui e trate em App.tsx (título e conteúdo). */
-export type Painel = { tipo: 'item'; id?: string };
+export type Painel = { tipo: 'musica'; id?: string };
+
+/** Chamada antes de fechar/trocar o painel: devolve false para cancelar (ex.: "sair sem salvar?"). */
+export type ProtecaoSaida = () => Promise<boolean>;
 
 export interface Aviso {
   texto: string;
@@ -26,7 +29,12 @@ interface Dialogo {
 interface EstadoUI {
   painel: Painel | null;
   abrirPainel: (p: Painel) => void;
+  /** Fecha o painel — antes, consulta a proteção de saída do formulário (se houver). */
   fecharPainel: () => void;
+  /** Fecha sem consultar a proteção (ex.: logo depois de salvar). */
+  fecharSemPerguntar: () => void;
+  /** O formulário aberto registra aqui sua proteção de saída (null = nenhuma). */
+  protegerSaida: (fn: ProtecaoSaida | null) => void;
   aviso: Aviso | null;
   avisar: (a: Aviso) => void;
   fecharAviso: () => void;
@@ -43,7 +51,21 @@ export function ProvedorEstado({ children }: { children: ComponentChildren }) {
   const [dialogo, setDialogo] = useState<Dialogo | null>(null);
   const timer = useRef<number>();
 
-  const fecharPainel = useCallback(() => setPainel(null), []);
+  const protecao = useRef<ProtecaoSaida | null>(null);
+  const protegerSaida = useCallback((fn: ProtecaoSaida | null) => {
+    protecao.current = fn;
+  }, []);
+  const trocarPainel = useCallback(async (p: Painel | null) => {
+    if (protecao.current && !(await protecao.current())) return;
+    protecao.current = null;
+    setPainel(p);
+  }, []);
+  const fecharPainel = useCallback(() => void trocarPainel(null), []);
+  const abrirPainel = useCallback((p: Painel) => void trocarPainel(p), []);
+  const fecharSemPerguntar = useCallback(() => {
+    protecao.current = null;
+    setPainel(null);
+  }, []);
   const fecharAviso = useCallback(() => setAviso(null), []);
   const avisar = useCallback((a: Aviso) => {
     clearTimeout(timer.current);
@@ -68,7 +90,7 @@ export function ProvedorEstado({ children }: { children: ComponentChildren }) {
   );
 
   const valor = useMemo(
-    () => ({ painel, abrirPainel: setPainel, fecharPainel, aviso, avisar, fecharAviso, dialogo, perguntar }),
+    () => ({ painel, abrirPainel, fecharPainel, fecharSemPerguntar, protegerSaida, aviso, avisar, fecharAviso, dialogo, perguntar }),
     [painel, aviso, dialogo],
   );
   return <Contexto.Provider value={valor}>{children}</Contexto.Provider>;

@@ -1,6 +1,7 @@
 import type { ComponentChildren } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { IconeFechar } from '../icones';
+import { useEstado } from '../estado';
 
 interface Props {
   titulo: string;
@@ -10,11 +11,13 @@ interface Props {
 
 /** Painel que abre pela direita, sem esconder a área principal (em paisagem). */
 export function PainelLateral({ titulo, aoFechar, children }: Props) {
+  const { dialogo } = useEstado();
   useEffect(() => {
-    const aoTeclar = (e: KeyboardEvent) => e.key === 'Escape' && aoFechar();
+    // Com um diálogo aberto, o Esc fecha só o diálogo
+    const aoTeclar = (e: KeyboardEvent) => e.key === 'Escape' && !dialogo && aoFechar();
     window.addEventListener('keydown', aoTeclar);
     return () => window.removeEventListener('keydown', aoTeclar);
-  }, [aoFechar]);
+  }, [aoFechar, dialogo]);
 
   return (
     <aside class="painel" aria-label={titulo}>

@@ -7,31 +7,30 @@ import { AvisoAtualizacao } from './layout/AvisoAtualizacao';
 import { AvisoDesfazer } from './componentes/AvisoDesfazer';
 import { Dialogo } from './componentes/Dialogo';
 import { ProvedorEstado, useEstado, type Painel } from './estado';
-import { TelaInicio } from './telas/TelaInicio';
-import { TelaItens } from './telas/TelaItens';
+import { TelaMusicas } from './telas/TelaMusicas';
 import { TelaAjustes } from './telas/TelaAjustes';
-import { FormItem } from './paineis/FormItem';
-import { IconeLista } from './icones';
+import { FormMusica } from './paineis/FormMusica';
+import { IconeMusica } from './icones';
 
 /** ► Nova tela: acrescente aqui (e em TELAS/MENU, em rotas.ts). */
 const TELA: Record<Tela, () => JSX.Element> = {
-  inicio: TelaInicio,
-  itens: TelaItens,
+  musicas: TelaMusicas,
   config: TelaAjustes,
 };
 
 /** ► Novo painel: título e conteúdo de cada tipo declarado em estado.tsx. */
 function tituloPainel(p: Painel): string {
   switch (p.tipo) {
-    case 'item':
-      return p.id ? 'Item' : 'Novo item';
+    case 'musica':
+      return p.id ? 'Editar música' : 'Nova música';
   }
 }
 
 function ConteudoPainel({ painel }: { painel: Painel }) {
   switch (painel.tipo) {
-    case 'item':
-      return <FormItem id={painel.id} />;
+    case 'musica':
+      // key: ao trocar de música, o formulário recomeça do zero
+      return <FormMusica key={painel.id ?? 'nova'} id={painel.id} />;
   }
 }
 
@@ -41,7 +40,7 @@ function Estrutura() {
   const Conteudo = TELA[tela];
 
   /** ► Opções do botão "+" (com uma só, ele cria direto). */
-  const opcoesNovo: OpcaoNovo[] = [{ rotulo: 'Item', Icone: IconeLista, acao: () => abrirPainel({ tipo: 'item' }) }];
+  const opcoesNovo: OpcaoNovo[] = [{ rotulo: 'Nova música', Icone: IconeMusica, acao: () => abrirPainel({ tipo: 'musica' }) }];
 
   return (
     <div class="estrutura">

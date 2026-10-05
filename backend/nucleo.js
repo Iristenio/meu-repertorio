@@ -11,10 +11,11 @@ var VERSAO_API = 1;
 // Campos novos entram SEMPRE no fim da lista (antes de _recebido_em), com migração em garantirEstrutura().
 var ESQUEMA = {
   // ► Nova entidade: acrescente aqui (mesmos campos do tipo em app/src/dominio/tipos.ts).
-  itens: {
-    aba: 'ITENS',
+  musicas: {
+    aba: 'MUSICAS',
     campos: [
-      ['id', 's'], ['titulo', 's'], ['descricao', 's'], ['data', 's?'], ['hora', 's?'], ['status', 's'],
+      ['id', 's'], ['titulo', 's'], ['compositor', 's'], ['estilo', 's'], ['link', 's'], ['partes', 'j'],
+      ['compacta', 'b'], ['data', 's?'], ['observacoes', 's'], ['status', 's'],
       ['criado_em', 's'], ['atualizado_em', 's'],
     ],
   },

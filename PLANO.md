@@ -2,7 +2,7 @@
 
 Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando offline; o Google depois.
 
-## Etapa 1 — Cadastrar músicas e a letra em partes
+## Etapa 1 — Cadastrar músicas e a letra em partes ✔ (concluída em 05/10/2026)
 - Entidade **Música** (substitui o "Item" de exemplo), com regras e testes: numeração automática dos
   versos, validação do link do YouTube, busca por título/trecho da letra.
 - Tela **Músicas** (lista, busca, filtro Rascunho/Concluída) e painel **Editar música** com os botões

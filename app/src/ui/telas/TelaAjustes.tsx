@@ -166,19 +166,36 @@ function CartaoPreferencias() {
           </div>
         </label>
         <label>
-          <span>A semana começa no</span>
-          <div class="segmentado pequeno">
-            <button role="radio" aria-checked={config.primeiro_dia_semana === 0} onClick={() => mudar({ primeiro_dia_semana: 0 })}>
-              Domingo
-            </button>
-            <button role="radio" aria-checked={config.primeiro_dia_semana === 1} onClick={() => mudar({ primeiro_dia_semana: 1 })}>
-              Segunda
-            </button>
-          </div>
+          <span>Compositor padrão</span>
+          <CampoCompositor valor={config.compositor_padrao} aoMudar={(compositor_padrao) => mudar({ compositor_padrao })} />
         </label>
       </div>
-      <p class="dica">As preferências valem para este aparelho. “Sistema” acompanha o modo claro/escuro do aparelho.</p>
+      <p class="dica">
+        O compositor padrão já vem preenchido nas músicas novas e sai nas capas. As preferências valem para este
+        aparelho; “Sistema” acompanha o modo claro/escuro do aparelho.
+      </p>
     </section>
+  );
+}
+
+/** Grava ao sair do campo (ou Enter), para não gravar a cada letra digitada. */
+function CampoCompositor({ valor, aoMudar }: { valor: string; aoMudar: (v: string) => void }) {
+  const [texto, setTexto] = useState(valor);
+  useEffect(() => setTexto(valor), [valor]);
+  const confirmar = () => {
+    const limpo = texto.trim().replace(/\s+/g, ' ');
+    if (limpo && limpo !== valor) aoMudar(limpo);
+    else setTexto(valor);
+  };
+  return (
+    <input
+      class="campo"
+      value={texto}
+      onInput={(e) => setTexto(e.currentTarget.value)}
+      onBlur={confirmar}
+      onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+      enterKeyHint="done"
+    />
   );
 }
 
