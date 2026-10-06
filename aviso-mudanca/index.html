@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#9c6b1c" />
+<title>Meu Repertório mudou de endereço</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+         background: #efede1; color: #101e29; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  main { max-width: 460px; text-align: center; }
+  h1 { font-size: 26px; margin: 0 0 12px; }
+  p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
+  a.botao { display: inline-block; margin: 8px 0 24px; padding: 16px 28px; border-radius: 999px; background: #9c6b1c;
+            color: #fff; font-size: 19px; font-weight: 700; text-decoration: none; }
+  ol { text-align: left; font-size: 16px; line-height: 1.5; padding-left: 22px; }
+  .endereco { font-weight: 700; word-break: break-all; }
+</style>
+</head>
+<body>
+<main>
+  <h1>🎵 O Meu Repertório mudou de endereço</h1>
+  <p>Agora o app fica em <span class="endereco">repertorio-paulo.github.io</span></p>
+  <a class="botao" href="https://repertorio-paulo.github.io/">Abrir o app no endereço novo</a>
+  <ol>
+    <li>Toque no botão acima e, no Chrome, em <b>⋮ → Instalar app</b>.</li>
+    <li>No app novo, vá em <b>Ajustes</b>, cole o código <b>APP1:</b> e toque em <b>Conectar</b>. As músicas voltam da planilha.</li>
+    <li>Depois apague o ícone ou atalho antigo da tela inicial.</li>
+  </ol>
+</main>
+<script>
+  // Remove o "modo offline" do app antigo neste endereço (a cópia guardada no aparelho)
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>

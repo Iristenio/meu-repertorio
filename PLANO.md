@@ -23,7 +23,11 @@ Cada etapa termina com algo **usável no aparelho**. Primeiro o app funcionando 
 - Menu **Capas**: lista dos estilos usados; capa A4 com estilo + compositor; gerar PDF.
 - ✅ Usável: capas para separar a pasta impressa por estilo.
 
-## Etapa 4 — Publicar e instalar ✔ (publicado em 05/10/2026: https://iristenio.github.io/meu-repertorio/)
+## Etapa 4 — Publicar e instalar ✔ (endereço atual: https://repertorio-paulo.github.io/)
+- 06/10/2026: mudou de `iristenio.github.io/meu-repertorio` para um **endereço próprio** (organização
+  `repertorio-paulo`, repositório `repertorio-paulo.github.io`). Motivo: nos celulares Xiaomi/Poco
+  (Chrome 154, HyperOS), nenhum app **novo** em `iristenio.github.io` instalava ("já está instalado" /
+  "não foi possível abrir"); em outro endereço instala. O endereço antigo mostra só um aviso de mudança.
 - Repositório no GitHub + GitHub Pages; instalar no celular e no PC.
 
 ## Extras feitos no caminho

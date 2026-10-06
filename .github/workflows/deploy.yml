@@ -27,13 +27,22 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: app/package-lock.json
-      - run: npm ci
-      - run: npm test --if-present -- --passWithNoTests
-      - run: npm run build
+      # O endereço antigo (iristenio.github.io/meu-repertorio) publica só o aviso de mudança
+      - if: github.event.repository.name == 'meu-repertorio'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: aviso-mudanca
+      - if: github.event.repository.name != 'meu-repertorio'
+        run: npm ci
+      - if: github.event.repository.name != 'meu-repertorio'
+        run: npm test --if-present -- --passWithNoTests
+      - if: github.event.repository.name != 'meu-repertorio'
+        run: npm run build
         env:
           # Repositório "<nome>.github.io" publica na raiz do endereço; os outros, em /<repositório>/
           BASE_PATH: ${{ endsWith(github.event.repository.name, '.github.io') && '/' || format('/{0}/', github.event.repository.name) }}
-      - uses: actions/upload-pages-artifact@v3
+      - if: github.event.repository.name != 'meu-repertorio'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: app/dist
 
