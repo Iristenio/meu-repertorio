@@ -114,6 +114,8 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 | Tamanho da letra | Normal 11,5 pt; comprimida 10,5 pt (a letra completa do template cabe em 1 folha comprimida) |
 | PDF | Pela janela de impressão do navegador ("Salvar como PDF"); nome do arquivo = título da música |
 | Folhas de continuação | Título menor com "(continuação)", sem o QR; número da folha ("2 / 3") no rodapé |
-| Duas colunas | Folhas sem o QR (continuação e músicas sem link) usam a letra em 2 colunas |
+| Duas colunas | Todas as folhas têm a letra em 2 colunas |
+| QR Code | Só na **última folha**, no pé da coluna da direita (onde ficava o violão); se a letra encher a folha, o QR vai sozinho para a seguinte |
+| Data | Se preenchida, aparece abaixo do compositor: "**Data:** 10/04/2025" |
 | Violão | **Retirado das folhas das músicas** (pedido do Paulo: mais limpo e mais espaço); continua nas capas |
 | Estilos híbridos | Um estilo só, escrito com barra (ex.: "Pagode/Swingueira"), com capa própria |

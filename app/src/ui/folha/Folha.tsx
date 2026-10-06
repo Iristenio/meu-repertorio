@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'preact/hooks';
 import type { Musica, Parte } from '../../dominio/tipos';
 import { limparMusica, rotulosDasPartes } from '../../dominio/musicas';
-import { agruparEmFolhas, paginar, type BlocoMedido, type Coluna, type Trecho } from '../../dominio/paginacao';
+import { agruparEmFolhas, paginar, paginarComQr, type BlocoMedido, type Coluna, type Trecho } from '../../dominio/paginacao';
 import { caminhoQr } from './qr';
 import { Celular, Nota, NotaDupla, Ondas } from './Desenhos';
 
@@ -28,12 +28,12 @@ export function tamanhoTitulo(titulo: string, continuacao: boolean): number {
   return Math.round(Math.max(minimo, Math.min(maximo, (maximo * 16) / letras)));
 }
 
-/** A 1ª folha tem o QR ao lado da letra (1 coluna); as outras, e as de músicas sem link, têm 2 colunas. */
-export const temDuasColunas = (musica: Musica, numero: number) => numero > 1 || !musica.link;
+/** "2025-04-10" → "10/04/2025". */
+export const dataBrasileira = (data: string) => data.split('-').reverse().join('/');
 
 interface PropsPagina {
   conteudo: ConteudoFolha;
-  /** Trechos da letra de cada coluna (1 ou 2 colunas). */
+  /** Trechos da letra de cada uma das 2 colunas. */
   colunas: Trecho[][];
   numero: number;
   total: number;
@@ -42,8 +42,9 @@ interface PropsPagina {
 export function PaginaFolha({ conteudo, colunas, numero, total }: PropsPagina) {
   const { musica } = conteudo;
   const continuacao = numero > 1;
-  const duas = temDuasColunas(musica, numero);
-  const classes = ['fl-pagina', musica.compacta && 'fl-compacta', continuacao && 'fl-continuacao', duas && 'fl-duas-colunas'];
+  // O QR Code vai no pé da coluna da direita da ÚLTIMA folha
+  const comQr = !!musica.link && numero === total;
+  const classes = ['fl-pagina', musica.compacta && 'fl-compacta', continuacao && 'fl-continuacao'];
   return (
     <article class={classes.filter(Boolean).join(' ')}>
       <Ondas class="fl-ondas" />
@@ -63,17 +64,21 @@ export function PaginaFolha({ conteudo, colunas, numero, total }: PropsPagina) {
             <b>Compositor:</b> {musica.compositor}
           </p>
         )}
+        {!continuacao && musica.data && (
+          <p class="fl-compositor fl-data">
+            <b>Data:</b> {dataBrasileira(musica.data)}
+          </p>
+        )}
         <hr class="fl-divisor" />
       </header>
 
       <div class="fl-corpo">
         <Letra conteudo={conteudo} trechos={colunas[0] ?? []} />
         <div class="fl-separador" />
-        {duas ? (
+        <div class="fl-coluna-direita">
           <Letra conteudo={conteudo} trechos={colunas[1] ?? []} />
-        ) : (
-          <aside class="fl-lateral">{musica.link && <CartaoQr link={musica.link} />}</aside>
-        )}
+          {comQr && <CartaoQr link={musica.link} />}
+        </div>
       </div>
 
       {total > 1 && (
@@ -162,10 +167,13 @@ function medirFolha(pagina: Element) {
       linhas: [...s.querySelectorAll('.fl-linha')].map(altura),
     };
   });
+  const qr = pagina.querySelector('.fl-qr');
   return {
     blocos,
     capacidade: letra.clientHeight,
     espacoEntre: secoes[1] ? margem(secoes[1], 'top') : 0,
+    /** Espaço que o cartão do QR tira da coluna da direita (cartão + afastamento da letra). */
+    reservaQr: qr ? altura(qr) + margem(qr, 'top') : 0,
   };
 }
 
@@ -178,7 +186,7 @@ export function usePaginas(conteudo: ConteudoFolha) {
   const [folhas, setFolhas] = useState<Trecho[][][] | null>(null);
   const todas: Trecho[] = conteudo.partes.map((p, parte) => ({ parte, de: 0, ate: p.texto.split('\n').length }));
   const { musica } = conteudo;
-  const chave = JSON.stringify([musica.titulo, musica.compositor, musica.link, musica.compacta, conteudo.partes]);
+  const chave = JSON.stringify([musica.titulo, musica.compositor, musica.data, musica.link, musica.compacta, conteudo.partes]);
 
   useLayoutEffect(() => {
     let ativo = true;
@@ -188,15 +196,18 @@ export function usePaginas(conteudo: ConteudoFolha) {
       const raiz = ref.current;
       if (!ativo || !raiz) return;
       const [primeira, outras] = [...raiz.querySelectorAll('.fl-pagina')].map(medirFolha);
-      const duasNaPrimeira = temDuasColunas(musica, 1);
-      const colunasNaFolha = (f: number) => (temDuasColunas(musica, f + 1) ? 2 : 1);
-      // Coluna nº i → está na 1ª folha ou nas outras → capacidade e medidas na largura dela
+      // Coluna nº i (2 por folha) → está na 1ª folha (cabeçalho maior) ou nas outras
       const coluna = (i: number): Coluna => {
-        const m = (duasNaPrimeira ? i < 2 : i < 1) ? primeira : outras;
+        const m = i < 2 ? primeira : outras;
         return { capacidade: m.capacidade, blocos: m.blocos };
       };
-      const colunas = paginar(conteudo.partes.length, coluna, primeira.espacoEntre || outras.espacoEntre);
-      setFolhas(agruparEmFolhas(colunas, colunasNaFolha));
+      const espacoEntre = primeira.espacoEntre || outras.espacoEntre;
+      const n = conteudo.partes.length;
+      setFolhas(
+        musica.link
+          ? paginarComQr(n, coluna, espacoEntre, primeira.reservaQr)
+          : agruparEmFolhas(paginar(n, coluna, espacoEntre), () => 2),
+      );
     })();
     return () => {
       ativo = false;

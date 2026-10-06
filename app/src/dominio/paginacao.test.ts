@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { agruparEmFolhas, paginar, type BlocoMedido, type Coluna } from './paginacao';
+import { agruparEmFolhas, paginar, paginarComQr, type BlocoMedido, type Coluna } from './paginacao';
 
 /** Parte com cabeçalho de 10 e `n` linhas de altura `linha`. */
 const bloco = (n: number, linha = 10): BlocoMedido => ({ cabecalho: 10, linhas: Array(n).fill(linha) });
@@ -60,5 +60,30 @@ describe('duas colunas por folha', () => {
     // 1ª folha com 2 colunas: tudo em 2 folhas, a 2ª com a coluna da direita vazia
     expect(agruparEmFolhas(cols, () => 2)).toEqual([[cols[0], cols[1]], [cols[2], []]]);
     expect(agruparEmFolhas([[]], () => 2)).toEqual([[[], []]]);
+  });
+});
+
+describe('QR Code no pé da coluna da direita da última folha', () => {
+  /** Todas as colunas com 100 de altura. */
+  const coluna = (blocos: BlocoMedido[]) => (): Coluna => ({ capacidade: 100, blocos });
+  const folhas = (b: BlocoMedido[], reserva: number) =>
+    paginarComQr(b.length, coluna(b), 5, reserva).map((f) => f.map((col) => col.map((t) => t.parte).join(',')));
+
+  it('cabe tudo numa folha: a coluna da direita fica mais curta por causa do QR', () => {
+    // col 0: partes 0 e 1 (40 + 5 + 40); col 1 (100 - 50 = 50): parte 2 (40)
+    expect(folhas([bloco(3), bloco(3), bloco(3)], 50)).toEqual([['0,1', '2']]);
+  });
+
+  it('se a letra enche a folha e o QR não cabe junto, o QR vai sozinho para a folha seguinte', () => {
+    // 4 partes de 40 cabem numa folha sem o QR (2 + 2); com o QR (col 1 = 50) não → 2ª folha só com o QR
+    expect(folhas([bloco(3), bloco(3), bloco(3), bloco(3)], 50)).toEqual([['0,1', '2,3'], ['', '']]);
+    expect(folhas([bloco(8), bloco(8)], 95)).toEqual([['0', '1'], ['', '']]);
+  });
+
+  it('letra que passa de uma folha: o QR fica no pé da direita da última', () => {
+    // 6 partes de 40: folha 1 com 4; folha 2 com 2 na coluna da esquerda e o QR na direita
+    expect(folhas(Array(6).fill(bloco(3)), 50)).toEqual([['0,1', '2,3'], ['4,5', '']]);
+    // 7 partes: a 7ª ainda cabe acima do QR (50 - 40)
+    expect(folhas(Array(7).fill(bloco(3)), 50)).toEqual([['0,1', '2,3'], ['4,5', '6']]);
   });
 });

@@ -127,3 +127,25 @@ export function agruparEmFolhas(colunas: Trecho[][], colunasNaFolha: (folha: num
   }
   return folhas;
 }
+
+/**
+ * Folhas de 2 colunas com o QR Code no pé da coluna da DIREITA da ÚLTIMA folha.
+ * Tenta 1 folha (coluna 1 encurtada pela `reserva`), depois 2 (coluna 3 encurtada) e assim por diante,
+ * ficando com o menor número de folhas em que a letra cabe antes da coluna do QR.
+ */
+export function paginarComQr(partes: number, coluna: (i: number) => Coluna, espacoEntre: number, reserva: number): Trecho[][][] {
+  for (let folhas = 1; ; folhas++) {
+    const colunaQr = folhas * 2 - 1;
+    const colunas = paginar(
+      partes,
+      (i) => {
+        const c = coluna(i);
+        return i === colunaQr ? { ...c, capacidade: Math.max(0, c.capacidade - reserva) } : c;
+      },
+      espacoEntre,
+    );
+    const ultimaComTexto = colunas.reduce((u, c, i) => (c.length ? i : u), 0);
+    if (ultimaComTexto <= colunaQr || folhas >= 50)
+      return Array.from({ length: folhas }, (_, f) => [colunas[f * 2] ?? [], colunas[f * 2 + 1] ?? []]);
+  }
+}
