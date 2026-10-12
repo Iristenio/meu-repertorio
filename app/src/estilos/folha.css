@@ -9,7 +9,7 @@
   --fl-texto: #1c2731;
   --fl-tam-letra: 11.5pt;
   --fl-entrelinha: 1.4;
-  --fl-espaco-partes: 5.5mm;
+  --fl-espaco-partes: 4mm;
 
   position: relative;
   box-sizing: border-box;
@@ -30,7 +30,7 @@
 .fl-compacta {
   --fl-tam-letra: 10.5pt;
   --fl-entrelinha: 1.3;
-  --fl-espaco-partes: 3.8mm;
+  --fl-espaco-partes: 2.8mm;
 }
 
 /* ---- Cabeçalho ---- */
@@ -74,6 +74,11 @@
 .fl-letra { min-height: 0; overflow: hidden; }
 .fl-separador { background: var(--fl-dourado); opacity: 0.75; }
 .fl-parte + .fl-parte { margin-top: var(--fl-espaco-partes); }
+/* Linha em branco dentro da parte (entre estrofes): meia linha */
+.fl-linha-vazia { height: calc(var(--fl-tam-letra) * var(--fl-entrelinha) * 0.5); }
+/* Fim do refrão: linha fina dourada */
+.fl-fim-refrao { width: 30mm; height: 0.3mm; margin: 2.4mm 0 0 1mm; border: none; background: var(--fl-dourado); opacity: 0.8; }
+.fl-compacta .fl-fim-refrao { margin-top: 1.6mm; }
 .fl-rotulo {
   width: fit-content;
   margin: 0 0 2.2mm;

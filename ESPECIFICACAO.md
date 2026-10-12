@@ -117,5 +117,7 @@ O **app** usa o dourado como cor principal (botões, destaques). A **folha impre
 | Duas colunas | Todas as folhas têm a letra em 2 colunas |
 | QR Code | Só na **última folha**, no pé da coluna da direita (onde ficava o violão); se a letra encher a folha, o QR vai sozinho para a seguinte |
 | Data | Se preenchida, aparece abaixo do compositor: "**Data:** 10/04/2025" |
+| Títulos das partes (folha) | **Só o refrão e o refrão final** mostram o título (pedido do Paulo); depois de cada refrão, uma linha fina dourada. As outras partes saem só com a letra. No app, a escrita continua com todas as partes |
+| Espaçamento | Menor entre as partes (4 mm; 2,8 mm comprimida) e meia linha nas linhas em branco entre estrofes |
 | Violão | **Retirado das folhas das músicas** (pedido do Paulo: mais limpo e mais espaço); continua nas capas |
 | Estilos híbridos | Um estilo só, escrito com barra (ex.: "Pagode/Swingueira"), com capa própria |

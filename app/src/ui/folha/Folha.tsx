@@ -90,23 +90,35 @@ export function PaginaFolha({ conteudo, colunas, numero, total }: PropsPagina) {
   );
 }
 
+/** Na folha só o refrão leva título (pedido do Paulo); as outras partes aparecem só com a letra. */
+export const ehRefrao = (p: Parte) => p.tipo === 'refrao' || p.tipo === 'refrao_final';
+
 function Letra({ conteudo, trechos }: { conteudo: ConteudoFolha; trechos: Trecho[] }) {
   const { partes, rotulos } = conteudo;
   return (
     <div class="fl-letra">
-      {trechos.map((t) => (
-        <section key={`${t.parte}-${t.de}`} class="fl-parte">
-          <h2 class="fl-rotulo">{rotulos[t.parte]}</h2>
-          {partes[t.parte].texto
-            .split('\n')
-            .slice(t.de, t.ate)
-            .map((linha, i) => (
-              <div key={i} class="fl-linha">
-                {linha.trim() ? linha : '\u00a0'}
-              </div>
-            ))}
-        </section>
-      ))}
+      {trechos.map((t) => {
+        const parte = partes[t.parte];
+        const linhas = parte.texto.split('\n');
+        const refrao = ehRefrao(parte);
+        return (
+          <section key={`${t.parte}-${t.de}`} class={`fl-parte${refrao ? ' fl-refrao' : ''}`}>
+            {refrao && <h2 class="fl-rotulo">{rotulos[t.parte]}</h2>}
+            {linhas.slice(t.de, t.ate).map((linha, i) =>
+              linha.trim() ? (
+                <div key={i} class="fl-linha">
+                  {linha}
+                </div>
+              ) : (
+                // Linha em branco (separa estrofes) ocupa meia linha
+                <div key={i} class="fl-linha fl-linha-vazia" />
+              ),
+            )}
+            {/* Linha fina depois do refrão, marcando que ele acabou */}
+            {refrao && t.ate >= linhas.length && <hr class="fl-fim-refrao" />}
+          </section>
+        );
+      })}
     </div>
   );
 }
@@ -160,13 +172,12 @@ const margem = (el: Element, lado: 'top' | 'bottom') => parseFloat(getComputedSt
 function medirFolha(pagina: Element) {
   const letra = pagina.querySelector('.fl-letra') as HTMLElement;
   const secoes = [...letra.querySelectorAll('.fl-parte')];
-  const blocos: BlocoMedido[] = secoes.map((s) => {
-    const rotulo = s.querySelector('.fl-rotulo')!;
-    return {
-      cabecalho: altura(rotulo) + margem(rotulo, 'top') + margem(rotulo, 'bottom'),
-      linhas: [...s.querySelectorAll('.fl-linha')].map(altura),
-    };
-  });
+  // "Cabeçalho" da parte = título (só no refrão) + linha de fim do refrão, com as margens
+  const extra = (el: Element | null) => (el ? altura(el) + margem(el, 'top') + margem(el, 'bottom') : 0);
+  const blocos: BlocoMedido[] = secoes.map((s) => ({
+    cabecalho: extra(s.querySelector('.fl-rotulo')) + extra(s.querySelector('.fl-fim-refrao')),
+    linhas: [...s.querySelectorAll('.fl-linha')].map(altura),
+  }));
   const qr = pagina.querySelector('.fl-qr');
   return {
     blocos,
